@@ -11,62 +11,51 @@ object Main {
   }
 
   /**
-    * Exercise 1
-    */
-  def pascal(c: Int, r: Int): Int =
-    if (c == 0 || r <= 1 || c >= r) {
-      1
-    } else {
-      pascal(c, r- 1) + pascal(c - 1, r - 1)
+   * Exercise 1
+   */
+    def pascal(c: Int, r: Int): Int = {
+      if (c == 0 || c == r) 1
+      else pascal(c - 1, r - 1) + pascal(c, r - 1)
     }
+  
   /**
-    * Exercise 2
-    */
-  def balance(chars: List[Char]): Boolean = {
-    def balanceExtra(chars: List[Char], left_par_count: Int): Boolean =
-      if (chars.isEmpty) {
-        if (left_par_count == 0) {
-          return true
-        } else {
-          return false
-        }
-      } else {
-        if (chars.head == '(') {
-          balanceExtra(chars.tail, left_par_count + 1)
-        } else if (chars.head == ')') {
-          if (left_par_count == 0) {
-            return false
-          } else {
-            return balanceExtra(chars.tail, left_par_count - 1)
+   * Exercise 2
+   */
+    def balance(chars: List[Char]): Boolean = {
+      def balanceCount(chars: List[Char], count: Int): Boolean = {
+        if (count < 0)
+          false
+        else {
+          if (chars.isEmpty)
+            count == 0
+          else {
+            if (chars.head == '(')
+              balanceCount(chars.tail, count + 1)
+            else if (chars.head == ')')
+              balanceCount(chars.tail, count - 1)
+            else
+              balanceCount(chars.tail, count)
           }
-        } else {
-          return balanceExtra(chars.tail, left_par_count)
         }
       }
-
-    balanceExtra(chars, 0)
-  }
-
-
+      balanceCount(chars, 0)
+    }
+  
   /**
-    * Exercise 3
-    */
-  def countChange(money: Int, coins: List[Int]): Int = {
-    def countChangeSorted(money: Int, coins: List[Int]): Int = {
-      if (money == 0) {
-        return 1
-      } else {
-        if (coins.isEmpty) {
-          return 0
-        } else {
-          var count = 0
-          if (money >= coins.head) {
-            count += countChangeSorted(money - coins.head, coins)
-          }
-          return count + countChangeSorted(money, coins.tail)
+   * Exercise 3
+   */
+    def countChange(money: Int, coins: List[Int]): Int = {
+      if (money == 0)
+        1
+      else if (money < 0)
+        0
+      else {
+        if (coins.isEmpty)
+          0
+        else {
+          countChange(money, coins.tail) +
+          countChange(money - coins.head, coins)
         }
       }
     }
-    return countChangeSorted(money, coins.sorted)
   }
-}

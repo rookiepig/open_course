@@ -25,7 +25,5 @@ class BalanceSuite extends FunSuite {
   test("balance: counting is not enough") {
     assert(!balance("())(".toList))
   }
-  test("balance: last is left paratheses") {
-    assert(!balance("(((hello)there)you)(".toList))
-  }
+
 }
