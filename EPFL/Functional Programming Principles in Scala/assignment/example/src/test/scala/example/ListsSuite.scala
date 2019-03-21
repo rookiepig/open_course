@@ -117,10 +117,29 @@ import org.scalatest.junit.JUnitRunner
     assert(sum(List(1,2,0)) === 3)
   }
 
+  test("sum of zero numbers") {
+    assert(sum(List(0,0,0,0,0)) === 0)
+  }
+  test("sum of negative numbers") {
+    assert(sum(List(0,-1,-2,0,-10000)) === -10003)
+  }
+  test("sum of empty list") {
+    assert(sum(List()) === 0)
+  }
+
   test("max of a few numbers") {
     assert(max(List(3, 7, 2)) === 7)
   }
 
+  test("max of repeated numbers") {
+    assert(max(List(3, 3, 3)) === 3)
+  }
+
+  test("max of empty list") {
+    intercept[NoSuchElementException] {
+      max(List())
+    }
+  }
 
 
-}
+} // class ListsSuite
